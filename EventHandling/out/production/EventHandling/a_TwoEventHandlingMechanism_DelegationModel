@@ -1,0 +1,51 @@
+
+Chương này xem xét một khía cạnh quan trọng của Java: sự kiện (event). Xử lý sự kiện là một khái niệm cơ bản
+trong lập trình Java vì nó là một phần không thể thiếu trong việc tạo ra nhiều loại ứng dụng khác nhau.
+Ví dụ, bất kỳ chương trình nào sử dụng giao diện người dùng đồ họa, chẳng hạn như một ứng dụng Java được
+viết cho Windows, đều dựa trên sự kiện. Do đó, bạn không thể viết các loại chương trình như thế mà không
+có kiến thức vững về xử lý sự kiện. Sự kiện được hỗ trợ bởi nhiều gói, bao gồm java.util, java.awt và
+java.awt.event. Bắt đầu từ JDK 9, java.awt và java.awt.event thuộc phần java.desktop module, và java.util
+thuộc phần java.base module.
+
+Nhiều sự kiện mà chương trình của bạn sẽ phản ứng được tạo ra khi người dùng tương tác với một chương trình
+dựa trên giao diện người dùng đồ họa. Đây là các loại sự kiện được xem xét trong chương này. Chúng được truyền
+vào chương trình của bạn theo nhiều cách khác nhau, phương thức cụ thể phụ thuộc vào sự kiện thực tế. Có một số
+loại sự kiện, bao gồm các sự kiện được tạo ra bởi chuột, bàn phím và các điều khiển GUI khác nhau như nút nhấn,
+thanh cuộn hoặc ô kiểm.
+
+Chương này bắt đầu với một tổng quan về cơ chế xử lý sự kiện của Java. Sau đó, nó xem xét một số lớp sự kiện và
+giao diện được sử dụng bởi Abstract Window Toolkit (AWT). AWT là framework GUI đầu tiên của Java và nó cung cấp
+một cách đơn giản để trình bày cơ bản về xử lý sự kiện. Tiếp theo, chương trình phát triển một số ví dụ minh họa
+cơ bản về xử lý sự kiện. Chương này cũng giới thiệu các khái niệm quan trọng liên quan đến lập trình giao diện
+người dùng và giải thích cách sử dụng lớp adapter, lớp inner và lớp inner vô danh để tối ưu hóa mã xử lý sự kiện.
+Các ví dụ được cung cấp trong phần còn lại của cuốn sách này sử dụng thường xuyên các kỹ thuật này.
+
+GHI CHÚ: Chương này tập trung vào các sự kiện liên quan đến các chương trình dựa trên giao diện người dùng đồ họa.
+Tuy nhiên, sự kiện đôi khi cũng được sử dụng cho mục đích không liên quan trực tiếp đến các chương trình dựa
+trên giao diện người dùng. Trong tất cả các trường hợp, các kỹ thuật cơ bản xử lý sự kiện tương tự áp dụng.
+
+Hai cơ chế xử lý sự kiện :
+Trước khi bắt đầu cuộc thảo luận về xử lý sự kiện, điểm lịch sử quan trọng phải được đề cập: Cách xử lý
+sự kiện đã thay đổi đáng kể giữa phiên bản ban đầu của Java (1.0) và tất cả các phiên bản Java sau đó,
+bắt đầu từ phiên bản 1.1. Mặc dù phương pháp xử lý sự kiện 1.0 vẫn được hỗ trợ, nhưng không được khuyến nghị
+sử dụng cho các chương trình mới. Ngoài ra, nhiều phương thức hỗ trợ mô hình sự kiện cũ 1.0 đã bị loại bỏ.
+Phương pháp hiện đại là cách sự kiện nên được xử lý trong tất cả các chương trình mới và do đó là phương pháp
+được sử dụng trong cuốn sách này.
+
+Mô hình Delegation Event
+Phương pháp hiện đại để xử lý sự kiện dựa trên mô hình sự kiện Delegation, mô hình này định nghĩa các cơ
+chế tiêu chuẩn và nhất quán để tạo ra và xử lý sự kiện. Khá đơn giản, ý tưởng của mô hình này là nguồn tạo
+ra một sự kiện và gửi nó đến một hoặc nhiều người nghe. Trong kịch bản này, người nghe chỉ đơn giản đợi cho
+đến khi nhận được một sự kiện. Khi một sự kiện được nhận, người nghe xử lý sự kiện và sau đó kết thúc.
+Lợi ích của thiết kế này là logic ứng dụng xử lý sự kiện được tách rời hoàn toàn với logic giao diện người
+dùng tạo ra các sự kiện đó. Một phần tử giao diện người dùng có thể "ủy quyền" việc xử lý sự kiện cho một
+đoạn mã riêng biệt.
+
+Trong mô hình sự kiện Delegation, người nghe phải đăng ký với nguồn để nhận thông báo sự kiện.
+Điều này mang lại lợi ích quan trọng: thông báo chỉ được gửi cho những người nghe muốn nhận.
+Đây là một cách hiệu quả hơn để xử lý sự kiện so với thiết kế được sử dụng trong phương pháp ban đầu
+của Java 1.0. Trước đây, sự kiện được truyền lên các cấu trúc chứa cho đến khi nó được xử lý bởi một thành phần.
+Điều này đòi hỏi các thành phần nhận các sự kiện mà họ không xử lý và làm lãng phí thời gian quý giá.
+Mô hình sự kiện Delegation loại bỏ điều này.
+
+Các phần sau định nghĩa sự kiện và mô tả vai trò của nguồn và người nghe.

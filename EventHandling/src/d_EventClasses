@@ -1,0 +1,56 @@
+
+Các lớp đại diện cho các sự kiện là cốt lõi của cơ chế xử lý sự kiện trong Java. Do đó, một cuộc thảo luận
+về xử lý sự kiện phải bắt đầu bằng các lớp sự kiện. Tuy nhiên, quan trọng là hiểu rằng Java định nghĩa
+nhiều loại sự kiện và không phải tất cả các lớp sự kiện đều có thể được thảo luận trong chương này.
+Có thể nói rằng các sự kiện được sử dụng rộng rãi nhất vào thời điểm viết bài này là các sự kiện được định nghĩa bởi AWT
+và Swing. Chương này tập trung vào các sự kiện AWT (Hầu hết các sự kiện này cũng áp dụng cho Swing).
+Một số sự kiện cụ thể của Swing được mô tả trong Chương 31, khi nói về Swing.
+
+Ở gốc của cấu trúc lớp sự kiện của Java là EventObject, nằm trong java.util. Đây là lớp cha cho tất cả các sự kiện.
+Một constructor của nó được hiển thị như sau:
+    EventObject(Object src)
+Ở đây, src là đối tượng tạo ra sự kiện này.
+
+EventObject định nghĩa hai phương thức: getSource() và toString(). Phương thức getSource() trả về nguồn gốc của sự kiện.
+Dạng tổng quát của nó được hiển thị như sau:
+    Object getSource()
+Như dự đoán, toString() trả về định dạng chuỗi tương đương của sự kiện.
+
+Lớp AWTEvent, được định nghĩa trong gói java.awt, là một lớp con của EventObject.
+Nó là lớp cha (trực tiếp hoặc gián tiếp) của tất cả các sự kiện dựa trên AWT được sử dụng bởi mô
+hình xử lý sự kiện giao tiếp. Phương thức getID() của nó có thể được sử dụng để xác định loại sự kiện.
+Chữ ký của phương thức này được hiển thị như sau:
+    int getID()
+
+Thông thường, bạn sẽ không sử dụng trực tiếp các tính năng được định nghĩa bởi AWTEvent.
+Thay vào đó, bạn sẽ sử dụng các lớp con của nó. Đến thời điểm này, quan trọng là chỉ biết rằng
+tất cả các lớp khác được thảo luận trong phần này đều là lớp con của AWTEvent.
+
+
+ActionEvent: Được tạo ra khi một hoạt động được thực hiện, chẳng hạn như nhấn nút, chọn mục trong danh sách, vv.
+
+KeyEvent: Được tạo ra khi có hoạt động liên quan đến bàn phím, chẳng hạn như nhấn phím, thả phím, vv.
+
+MouseEvent: Được tạo ra khi có hoạt động liên quan đến chuột, chẳng hạn như nhấp chuột, kéo chuột, vv.
+
+WindowEvent: Được tạo ra khi có hoạt động liên quan đến cửa sổ, chẳng hạn như mở, đóng, thay đổi kích thước, vv.
+
+ComponentEvent: Được tạo ra khi có hoạt động liên quan đến thành phần giao diện người dùng, chẳng hạn như thay đổi kích thước, hiển thị, vv.
+
+FocusEvent: Được tạo ra khi có hoạt động liên quan đến trạng thái trỏ chuột, chẳng hạn như trỏ chuột vào hoặc rời khỏi một thành phần.
+
+ItemEvent: Được tạo ra khi có hoạt động liên quan đến một thành phần chọn, chẳng hạn như chọn một mục từ danh sách, kiểm tra hộp, vv.
+
+ContainerEvent: Được tạo ra khi có hoạt động liên quan đến các thành phần chứa, chẳng hạn như thêm hoặc xóa thành phần con.
+
+InputEvent: Được tạo ra khi có hoạt động liên quan đến đầu vào, chẳng hạn như nhấn nút chuột hoặc bàn phím.
+Các lớp con của nó bao gồm:
+
+KeyEvent: Được tạo ra khi có hoạt động liên quan đến bàn phím, chẳng hạn như nhấn phím, thả phím, vv.
+MouseEvent: Được tạo ra khi có hoạt động liên quan đến chuột, chẳng hạn như nhấp chuột, kéo chuột, vv.
+MouseWheelEvent: Được tạo ra khi có hoạt động cuộn chuột, chẳng hạn như cuộn lên hoặc xuống.
+
+TextEvent: Được tạo ra khi có hoạt động liên quan đến văn bản, chẳng hạn như nhập văn bản hoặc chỉnh sửa văn bản.
+
+AdjustmentEvent: Được tạo ra khi có hoạt động liên quan đến thanh cuộn, chẳng hạn như di chuyển thanh cuộn,
+thay đổi giá trị, vv.

@@ -1,0 +1,20 @@
+
+Người nghe sự kiện (Event Listeners)
+Một người nghe là một đối tượng được thông báo khi một sự kiện xảy ra. Nó có hai yêu cầu chính.
+Đầu tiên, nó phải được đăng ký với một hoặc nhiều nguồn để nhận thông báo về các loại sự kiện cụ thể.
+Thứ hai, nó phải triển khai các phương thức để nhận và xử lý các thông báo này. Nói cách khác, người
+nghe phải cung cấp các trình xử lý sự kiện.
+
+Các phương thức nhận và xử lý sự kiện được định nghĩa trong một tập hợp các giao diện, như các giao diện
+được tìm thấy trong java.awt.event. Ví dụ, giao diện MouseMotionListener xác định hai phương thức để nhận
+thông báo khi chuột được kéo hoặc di chuyển. Bất kỳ đối tượng nào cũng có thể xử lý một hoặc cả hai sự kiện
+này nếu nó cung cấp một phiên bản triển khai của giao diện này. Các giao diện người nghe khác sẽ được thảo luận
+sau trong chương này và các chương khác.
+
+Đây là một điểm quan trọng khác về sự kiện: Một trình xử lý sự kiện phải trả về nhanh chóng. Đối với phần lớn,
+một chương trình GUI không nên vào "chế độ" hoạt động trong đó nó giữ quyền điều khiển trong một khoảng thời gian kéo dài.
+Thay vào đó, nó phải thực hiện các hành động cụ thể phản hồi cho sự kiện và sau đó trả lại quyền điều khiển cho
+hệ thống chạy. Không tuân thủ điều này có thể làm cho chương trình của bạn trở nên chậm chạp hoặc thậm chí không phản hồi.
+Nếu chương trình của bạn cần thực hiện một tác vụ lặp đi lặp lại, như cuộn một dòng chữ chạy, nó phải làm như vậy
+bằng cách khởi động một luồng riêng biệt. Tóm lại, khi chương trình của bạn nhận được một sự kiện, nó phải xử lý nó
+ngay lập tức, sau đó trả lại quyền điều khiển.

@@ -1,0 +1,39 @@
+Event
+Trong mô hình ủy quyền, một sự kiện là một đối tượng mô tả một thay đổi trạng thái trong một nguồn.
+Ngoài các nguyên nhân khác, một sự kiện có thể được tạo ra là kết quả của việc một người tương tác
+với các yếu tố trong giao diện người dùng đồ họa. Một số hoạt động gây ra sự kiện bao gồm nhấn nút,
+nhập ký tự thông qua bàn phím, chọn một mục trong danh sách và nhấp chuột. Có thể đưa ra nhiều hoạt
+động khác của người dùng như ví dụ.
+
+Cũng có thể xảy ra các sự kiện không phải do tương tác trực tiếp với giao diện người dùng. Ví dụ,
+một sự kiện có thể được tạo ra khi một đồng hồ bấm giờ hết thời gian, một bộ đếm vượt quá một giá trị,
+xảy ra một lỗi phần mềm hoặc phần cứng, hoặc một hoạt động hoàn thành. Bạn có thể tự do định nghĩa
+các sự kiện phù hợp cho ứng dụng của mình.
+
+Nguồn sự kiện
+Một nguồn là một đối tượng tạo ra một sự kiện. Điều này xảy ra khi trạng thái nội bộ của đối tượng đó
+thay đổi theo một cách nào đó. Một nguồn có thể tạo ra nhiều loại sự kiện.
+
+Một nguồn phải đăng ký người nghe để người nghe nhận được thông báo về một loại sự kiện cụ thể.
+Mỗi loại sự kiện có phương thức đăng ký riêng của nó. Đây là hình thức chung:
+    public void addTypeListener(TypeListener el)
+Ở đây, Type là tên của sự kiện và el là một tham chiếu đến người nghe sự kiện. Ví dụ, phương thức đăng ký
+người nghe sự kiện bàn phím được gọi là addKeyListener(). Phương thức đăng ký người nghe sự kiện di chuyển
+chuột được gọi là addMouseMotionListener(). Khi một sự kiện xảy ra, tất cả người nghe đã đăng ký sẽ nhận được
+thông báo và nhận một bản sao của đối tượng sự kiện. Điều này được gọi là gửi sự kiện theo nhiều người nghe (multicasting).
+Trong tất cả các trường hợp, thông báo chỉ được gửi cho những người nghe đã đăng ký để nhận.
+
+Một số nguồn có thể chỉ cho phép một người nghe đăng ký. Dạng chung của một phương thức như vậy là:
+public void addTypeListener(TypeListener el)
+throws java.util.TooManyListenersException
+Ở đây, Type là tên của sự kiện và el là một tham chiếu đến người nghe sự kiện. Khi một sự kiện như vậy xảy ra,
+người nghe đã đăng ký sẽ nhận được thông báo. Điều này được gọi là gửi sự kiện theo người nghe đơn lẻ (unicasting).
+
+Một nguồn cũng phải cung cấp một phương thức cho phép người nghe hủy đăng ký quan tâm đối với một loại sự
+kiện cụ thể. Dạng chung của một phương thức như vậy là:
+    public void removeTypeListener(TypeListener el)
+Ở đây, Type là tên của sự kiện và el là một tham chiếu đến người nghe sự kiện. Ví dụ, để xóa một người nghe
+sự kiện bàn phím, bạn sẽ gọi removeKeyListener().
+
+Các phương thức thêm hoặc xóa người nghe được cung cấp bởi nguồn tạo ra sự kiện. Ví dụ, lớp Component, là một lớp
+cấp cao được định nghĩa bởi AWT, cung cấp các phương thức để thêm và xóa người nghe sự kiện bàn phím và chuột.
