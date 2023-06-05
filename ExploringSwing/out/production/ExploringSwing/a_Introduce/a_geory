@@ -1,0 +1,29 @@
+
+
+Chương trước đã mô tả một số khái niệm cốt lõi liên quan đến Swing và cho thấy hình thức
+chung của một ứng dụng Swing. Chương này tiếp tục cuộc thảo luận về Swing bằng cách trình
+bày một tổng quan về một số thành phần Swing, như các nút, hộp kiểm, cây và bảng.
+
+Các thành phần Swing cung cấp chức năng phong phú và cho phép tùy chỉnh ở mức độ cao.
+Do giới hạn không gian, không thể mô tả tất cả các tính năng và thuộc tính của chúng.
+Thay vào đó, mục đích của tổng quan này là để bạn có cái nhìn về khả năng của bộ thành phần Swing.
+Các lớp thành phần Swing được mô tả trong chương này được trình bày như sau:
+
+JButton
+JList
+JTable
+JCheckBox
+JRadioButton
+JTextField
+JComboBox
+JScrollPane
+JToggleButton
+JLabel
+JTabbedPane
+JTree
+Các thành phần này đều là lightweight, điều này có nghĩa là chúng được tạo ra từ lớp JComponent.
+
+Ngoài ra, cũng được thảo luận về lớp ButtonGroup, một lớp bao bọc một tập hợp các nút
+Swing đồng thời chỉ chọn một nút duy nhất, và lớp ImageIcon, một lớp bao bọc một hình ảnh đồ họa.
+Cả hai đều được định nghĩa bởi Swing và được đóng gói trong gói javax.swing.
+

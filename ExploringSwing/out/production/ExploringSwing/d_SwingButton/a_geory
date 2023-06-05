@@ -1,0 +1,25 @@
+Các nút Swing
+Swing định nghĩa bốn loại nút: JButton, JToggleButton, JCheckBox và JRadioButton.
+Tất cả đều là lớp con của lớp AbstractButton, mở rộng từ JComponent.
+Do đó, tất cả các nút chia sẻ một số đặc điểm chung.
+
+AbstractButton chứa nhiều phương thức cho phép bạn kiểm soát hành vi của các nút. Ví dụ, bạn có thể
+định nghĩa các biểu tượng khác nhau được hiển thị cho nút khi nó bị vô hiệu hóa, được nhấn hoặc được chọn.
+Một biểu tượng khác có thể được sử dụng làm biểu tượng khi di chuột qua một nút. Các phương thức sau đây
+đặt các biểu tượng này:
+
+void setDisabledIcon(Icon di)
+void setPressedIcon(Icon pi)
+void setSelectedIcon(Icon si)
+void setRolloverIcon(Icon ri)
+Ở đây, di, pi, si và ri là các biểu tượng được sử dụng cho mục đích tương ứng.
+
+Văn bản liên kết với một nút có thể được đọc và ghi thông qua các phương thức sau đây:
+String getText()
+void setText(String str)
+Ở đây, str là văn bản được liên kết với nút.
+
+Mô hình được sử dụng bởi tất cả các nút được định nghĩa bởi giao diện ButtonModel. Một nút tạo ra một
+sự kiện hành động khi được nhấn. Có thể có các sự kiện khác.
+
+Tiếp theo, sẽ được xem xét từng lớp nút cụ thể.

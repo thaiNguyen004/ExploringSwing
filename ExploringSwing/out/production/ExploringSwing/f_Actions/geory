@@ -1,0 +1,94 @@
+Sử dụng Actions
+Thường thì một toolbar và một menu item chứa các mục chung. Ví dụ, các chức năng cung cấp bởi thanh công cụ Debug
+trong ví dụ trước đây cũng có thể được cung cấp thông qua một lựa chọn trong menu. Trong trường hợp như vậy,
+việc chọn một tùy chọn (như đặt một điểm dừng) dẫn đến một hành động tương tự, độc lập với việc sử dụng menu
+hay thanh công cụ. Ngoài ra, cả nút trong thanh công cụ và mục trong menu (có lẽ) cũng sử dụng cùng một biểu tượng.
+Hơn nữa, khi một nút trong thanh công cụ bị vô hiệu hóa, mục tương ứng trong menu cũng cần được vô hiệu hóa.
+Một tình huống như vậy thông thường sẽ dẫn đến việc trùng lặp mã nguồn và phụ thuộc lẫn nhau, điều này không tối ưu.
+May mắn thay, Swing cung cấp một giải pháp: action (hành động).
+
+Một action là một thể hiện của giao diện Action. Action mở rộng giao diện ActionListener và cung cấp cách kết hợp
+thông tin trạng thái với phương thức xử lý sự kiện actionPerformed(). Kết hợp này cho phép một action quản lý hai hoặc
+nhiều thành phần. Ví dụ, một action cho phép bạn tập trung kiểm soát và xử lý một nút trong thanh công cụ và một
+mục trong menu. Thay vì phải nhân đôi mã nguồn, chương trình của bạn chỉ cần tạo một action tự động xử lý cả hai thành phần.
+
+Vì Action mở rộng ActionListener, một action phải cung cấp một implement của phương thức actionPerformed().
+Xử lý viên này sẽ xử lý các sự kiện action được tạo ra bởi các đối tượng được liên kết với action.
+
+Ngoài việc kế thừa phương thức actionPerformed(), Action còn định nghĩa một số phương thức riêng. Một trong số đó
+là putValue(). Nó gán giá trị của các thuộc tính liên quan đến một action và được hiển thị như sau:
+
+void putValue(String key, Object val)
+
+Nó gán val vào thuộc tính được chỉ định bởi key mà đại diện cho thuộc tính mong muốn. Mặc dù không được sử dụng
+trong ví dụ ở phần sau, nó hữu ích để lưu ý rằng Action cũng cung cấp phương thức getValue() để nhận được giá trị
+của một thuộc tính đã được chỉ định. Nó được hiển thị như sau:
+
+Object getValue(String key)
+
+Nó trả về một tham chiếu đến thuộc tính được chỉ định bởi key.
+Các giá trị key được sử dụng bởi putValue() và getValue() bao gồm các giá trị được hiển thị dưới đây:
+Các key sau đây được sử dụng để đặt giá trị cho các thuộc tính của Action:
+
+1. ACCELERATOR_KEY: Đây là key để đặt phím tắt cho action.
+Giá trị của key này là một đối tượng KeyStroke.
+
+2. ACTION_COMMAND_KEY: Đây là key để đặt chuỗi dùng để xác định hành động.
+Đây thường là một chuỗi duy nhất đại diện cho action và được sử dụng trong việc xử lý sự kiện actionPerformed.
+
+3. DEFAULT_KEY: Đây là key để đặt giá trị mặc định cho action.
+Giá trị của key này là một đối tượng Boolean.
+
+4. LONG_DESCRIPTION: Đây là key để đặt mô tả dài cho action.
+Giá trị của key này là một chuỗi dùng để cung cấp mô tả chi tiết về action.
+
+5. MNEMONIC_KEY: Đây là key để đặt phím tắt cho action sử dụng kỹ thuật mnenonic.
+Giá trị của key này là một đối tượng Integer đại diện cho mã ASCII của ký tự được chọn làm phím tắt.
+
+6. NAME: Đây là key để đặt tên cho action.
+Giá trị của key này là một chuỗi dùng để hiển thị tên action.
+
+7. SELECTED_KEY: Đây là key để đặt giá trị trạng thái được chọn cho action.
+Giá trị của key này là một đối tượng Boolean.
+
+8. SHORT_DESCRIPTION: Đây là key để đặt mô tả ngắn gọn cho action.
+Giá trị của key này là một chuỗi dùng để cung cấp mô tả tóm tắt về action.
+
+9. SMALL_ICON: Đây là key để đặt biểu tượng nhỏ cho action.
+Giá trị của key này là một đối tượng Icon được sử dụng để hiển thị biểu tượng cho action,
+thường là một biểu tượng hình ảnh nhỏ.
+
+Ví dụ, để đặt phím tắt cho chữ X, sử dụng lời gọi putValue() như sau:
+actionOb.putValue(MNEMONIC_KEY, KeyEvent.VK_X);
+
+Một thuộc tính của Action không thể truy cập thông qua putValue() và getValue() là trạng thái bật/tắt.
+Để làm điều này, bạn sử dụng các phương thức setEnabled() và isEnabled(). Chúng được định nghĩa như sau:
+
+void setEnabled(boolean enabled)
+boolean isEnabled()
+
+Với setEnabled(), nếu enabled là true, action được bật. Ngược lại, nó sẽ bị tắt.
+Nếu action được bật, isEnabled() trả về true. Ngược lại, nó trả về false.
+
+Mặc dù bạn có thể tự triển khai toàn bộ giao diện Action, nhưng thông thường bạn sẽ không cần làm điều đó.
+Thay vào đó, Swing cung cấp một triển khai một phần gọi là AbstractAction mà bạn có thể mở rộng.
+Bằng cách mở rộng AbstractAction, bạn chỉ cần triển khai một phương thức actionPerformed().
+Các phương thức Action khác đã được cung cấp sẵn. AbstractAction cung cấp ba constructor.
+Một trong số đó được sử dụng trong chương này được hiển thị như sau:
+AbstractAction(String name, Icon image)
+
+Nó xây dựng một AbstractAction có tên được chỉ định bởi name và biểu tượng được chỉ định bởi image.
+
+Sau khi tạo một action, nó có thể được thêm vào JToolBar và sử dụng để tạo JMenuItem. Để thêm một action vào JToolBar,
+sử dụng phiên bản add() như sau:
+JButton add(Action actObj)
+
+Ở đây, actObj là action được thêm vào thanh công cụ. Các thuộc tính được định nghĩa bởi actObj được sử dụng để tạo
+một nút trong thanh công cụ. Để tạo một menu item từ một action, sử dụng constructor JMenuItem như sau:
+JMenuItem(Action actObj)
+
+Ở đây, actObj là action được sử dụng để tạo một menu item dựa trên các thuộc tính của nó.
+LƯU Ý: Ngoài JToolBar và JMenuItem, actions cũng được hỗ trợ bởi một số thành phần Swing khác
+như JPopupMenu, JButton, JRadioButton và JCheckBox. JRadioButtonMenuItem và JCheckBoxMenuItem cũng hỗ trợ actions.
+
+example.java
