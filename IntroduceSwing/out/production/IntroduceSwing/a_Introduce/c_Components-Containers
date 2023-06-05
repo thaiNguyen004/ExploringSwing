@@ -1,0 +1,114 @@
+Các thành phần và các bộ chứa
+Một giao diện người dùng Swing bao gồm hai thành phần chính: thành phần (components) và bộ chứa (containers).
+Tuy nhiên, sự phân biệt này chủ yếu là một khái niệm vì tất cả các bộ chứa cũng là các thành phần. Sự khác biệt giữa hai
+loại này nằm trong mục đích dự định của chúng:
+
+Theo cách sử dụng thông thường, một thành phần là một điều khiển trực quan độc lập, chẳng hạn như nút nhấn hoặc thanh trượt.
+Một bộ chứa (container) chứa một nhóm các thành phần. Do đó, một bộ chứa là một loại đặc biệt của thành phần được thiết kế
+để chứa các thành phần khác.
+Hơn nữa, để hiển thị một thành phần, nó phải được đặt trong một bộ chứa. Do đó, tất cả các giao diện người dùng Swing
+sẽ có ít nhất một bộ chứa.
+Bởi vì bộ chứa cũng là thành phần, một bộ chứa cũng có thể chứa các bộ chứa khác. Điều này cho phép Swing xác định cái
+gọi là hệ thống chứa, với bộ chứa cấp cao nhất phải là một bộ chứa cấp cao.
+
+Hãy xem xét kỹ hơn các thành phần và bộ chứa.
+
+Các thành phần
+Nói chung, các thành phần Swing được phát triển từ lớp JComponent.
+
+(Các ngoại lệ duy nhất là bốn bộ chứa cấp cao nhất, được mô tả trong phần tiếp theo.)
+
+JComponent cung cấp chức năng chung cho tất cả các thành phần. Ví dụ, JComponent hỗ trợ việc tuỳ chỉnh giao diện người dùng.
+JComponent kế thừa các lớp Container và Component trong AWT. Do đó, một thành phần Swing được xây dựng trên
+và tương thích với một thành phần AWT.
+
+Tất cả các thành phần trong Swing được biểu diễn bằng các lớp được xác định trong gói javax.swing.
+Bảng sau đây hiển thị tên lớp cho các thành phần Swing (bao gồm cả các bộ chứa được sử dụng).
+
+JApplet (Deprecated)
+JColorChooser
+JDialog
+JFrame
+JLayeredPane
+JMenuItem
+JPopupMenu
+JRootPane
+JSlider
+JTable
+JTogglebutton
+JViewport
+JButton
+JComboBox
+JEditorPane
+JInternalFrame
+JList
+JOptionPane
+JProgressBar
+JScrollBar
+JSpinner
+JTextArea
+JToolBar
+JWindow
+JCheckBox
+JComponent
+JFileChooser
+JLabel
+JMenu
+JPanel
+JRadioButton
+JScrollPane
+JSplitPane
+JTextField
+JToolTip
+JCheckBoxMenultem
+JDesktopPane
+JFormattedTextField
+JLayer
+JMenuBar
+JPasswordField
+JRadioButtonMenuItem
+JSeparator
+JTabbedPane
+JTextPane
+JTree
+
+Chú ý rằng tất cả các lớp thành phần đều bắt đầu bằng chữ cái J. Ví dụ, lớp cho một nhãn là JLabel; lớp cho một nút nhấn
+là JButton; và lớp cho thanh cuộn là JScrollBar.
+
+Các bộ chứa
+Swing định nghĩa hai loại bộ chứa. Loại đầu tiên là các bộ chứa cấp cao nhất: JFrame, JApplet, JWindow và JDialog.
+Những bộ chứa này không kế thừa JComponent. Tuy vậy, chúng kế thừa các lớp Component và Container của AWT. Khác với các
+
+thành phần lightweight khác của Swing, các bộ chứa cấp cao nhất là heavyweight. Điều này làm cho các bộ chứa cấp cao nhất
+trở thành một trường hợp đặc biệt trong thư viện thành phần Swing.
+
+Như tên gọi, một bộ chứa cấp cao nhất phải nằm ở đỉnh của một hệ thống chứa. Một bộ chứa cấp cao nhất không nằm trong
+bất kỳ bộ chứa nào khác. Hơn nữa, mỗi hệ thống chứa phải bắt đầu bằng một bộ chứa cấp cao nhất. Bộ chứa cấp cao nhất
+thường được sử dụng cho các ứng dụng là JFrame.
+
+Trong quá khứ, JApplet được sử dụng cho các applet. Như đã được giải thích
+trong Chương 1, bắt đầu từ JDK 9, applet đã bị loại bỏ. Do đó, JApplet đã bị loại bỏ.
+Hơn nữa, bắt đầu từ JDK 11, hỗ trợ applet đã bị gỡ bỏ.
+
+Loại thứ hai của các bộ chứa được hỗ trợ bởi Swing là các bộ chứa lightweight. Các bộ chứa lightweight kế thừa JComponent.
+Một ví dụ về bộ chứa lightweight là JPanel, một bộ chứa tổng quát. Các bộ chứa lightweight thường được sử dụng để tổ chức
+và quản lý các nhóm thành phần liên quan vì một bộ chứa lightweight có thể được chứa trong một bộ chứa khác.
+Do đó, bạn có thể sử dụng các bộ chứa lightweight như JPanel để tạo các nhóm điều khiển liên quan nằm trong một bộ chứa bên ngoài.
+
+Các top-level container trong Swing định nghĩa một tập hợp các pane. Ở đỉnh của hệ thống là một thể hiện của JRootPane.
+JRootPane là một container lightweight có mục đích quản lý các pane khác. Nó cũng giúp quản lý menu bar tùy chọn.
+Các pane tạo nên root pane được gọi là glass pane, content pane và layered pane.
+
+Glass pane là pane ở mức đỉnh. Nó nằm phía trên và che phủ hoàn toàn các pane khác. Mặc định, nó là một thể hiện của
+JPanel trong suốt. Glass pane cho phép bạn quản lý sự kiện chuột ảnh hưởng đến toàn bộ container
+(thay vì một thành phần riêng lẻ) hoặc vẽ lên bất kỳ thành phần nào khác, ví dụ. Trong hầu hết các trường hợp, bạn sẽ
+không cần phải sử dụng glass pane trực tiếp, nhưng nó sẽ có sẵn nếu bạn cần.
+
+Layered pane là một thể hiện của JLayeredPane. Layered pane cho phép các thành phần được gán một giá trị độ sâu.
+Giá trị này xác định thành phần nào nằm trên thành phần khác. (Do đó, layered pane cho phép bạn chỉ định một Z-order
+cho một thành phần, mặc dù điều này thường không cần thiết.) Layered pane chứa content pane và menu bar (tùy chọn).
+
+Mặc dù glass pane và layered pane là các phần không thể thiếu trong hoạt động của top-level container và đóng vai trò quan trọng,
+nhưng phần lớn những gì chúng cung cấp diễn ra trong nền. Pane mà ứng dụng của bạn sẽ tương tác nhiều nhất là content pane,
+vì đây là pane mà bạn sẽ thêm các thành phần trực quan vào. Nói cách khác, khi bạn thêm một thành phần như một nút vào
+một top-level container, bạn sẽ thêm nó vào content pane. Mặc định, content pane là một thể hiện của JPanel không trong suốt.

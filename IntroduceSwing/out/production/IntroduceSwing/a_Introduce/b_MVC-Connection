@@ -1,0 +1,38 @@
+
+Kết nối MVC
+Nói chung, một thành phần giao diện là một tổ hợp của ba khía cạnh riêng biệt:
+• Cách thành phần hiển thị trên màn hình (View)
+• Cách thành phần phản ứng với người dùng (Controller)
+• Thông tin trạng thái liên quan đến thành phần  (Model)
+Dù sử dụng kiến trúc nào để triển khai một thành phần, nó phải chứa ngầm ba phần này. Qua nhiều năm, một kiến trúc
+thành phần đã được chứng minh là rất hiệu quả: Model-View-Controller, viết tắt là MVC.
+
+Kiến trúc MVC thành công vì mỗi phần của thiết kế tương ứng với một khía cạnh của một thành phần.
+Theo thuật ngữ MVC, model tương ứng với thông tin trạng thái liên quan đến thành phần.
+
+Ví dụ, trong trường hợp một ô kiểm:
+Model chứa một trường chỉ định xem ô kiểm đã được chọn hay chưa.
+View xác định cách thành phần được hiển thị trên màn hình, bao gồm bất kỳ khía cạnh nào của view bị ảnh hưởng bởi
+trạng thái hiện tại của model.
+Controller xác định cách thành phần phản ứng với người dùng. Ví dụ, khi người dùng nhấp vào một ô kiểm, controller
+phản ứng bằng cách thay đổi model để phản ánh sự lựa chọn của người dùng (được chọn hoặc không được chọn).
+
+Điều này sau đó dẫn đến việc cập nhật view. Bằng cách tách thành phần thành model, view và controller, việc thay đổi
+cài đặt cụ thể của mỗi phần có thể được thực hiện mà không ảnh hưởng đến hai phần còn lại. Ví dụ, các cài đặt view
+khác nhau có thể hiển thị cùng một thành phần theo cách khác nhau mà không ảnh hưởng đến model hoặc controller.
+
+Mặc dù kiến trúc MVC và các nguyên tắc đằng sau nó là khá lý thuyết, mức độ phân tách cao giữa view và controller
+không có lợi ích cho các thành phần Swing. Thay vào đó, Swing sử dụng một phiên bản đã được sửa đổi của MVC kết hợp
+view và controller thành một thực thể logic duy nhất được gọi là UI delegate. Vì lí do này, phương pháp của Swing
+được gọi là kiến trúc Model-Delegate hoặc kiến trúc Separable Model. Do đó, mặc dù kiến trúc thành phần của Swing dựa trên MVC,
+nó không sử dụng một cài đặt cổ điển của nó.
+
+Khả năng tùy chỉnh giao diện có thể tùy chỉnh của Swing được thực hiện thông qua kiến trúc Model-Delegate.
+Bởi vì view (giao diện) và controller (cảm giác) được tách biệt với model, giao diện có thể được thay đổi mà không
+ảnh hưởng đến cách mà thành phần được sử dụng trong một chương trình. Ngược lại, có thể tùy chỉnh model mà không ảnh hưởng
+đến cách mà thành phần hiển thị trên màn hình hoặc phản ứng với đầu vào từ người dùng.
+
+Để hỗ trợ kiến trúc Model-Delegate, hầu hết các thành phần Swing chứa hai đối tượng. Đối tượng đầu tiên đại diện cho model.
+Đối tượng thứ hai đại diện cho UI delegate. Models được xác định bằng giao diện.
+Ví dụ, model cho một nút được xác định bằng giao diện ButtonModel. UI delegate là các lớp kế thừa từ ComponentUI.
+Ví dụ, UI delegate cho một nút là ButtonUI. Thông thường, chương trình của bạn sẽ không tương tác trực tiếp với UI delegate.

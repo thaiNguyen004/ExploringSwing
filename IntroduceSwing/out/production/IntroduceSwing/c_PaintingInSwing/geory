@@ -1,0 +1,81 @@
+----------------------
+Vẽ trong Swing
+Mặc dù bộ công cụ Swing rất mạnh mẽ, bạn không bị giới hạn trong việc sử dụng nó vì Swing cũng cho phép bạn viết trực tiếp
+vào khu vực hiển thị của một khung, bảng điều khiển hoặc một trong những thành phần khác của Swing, chẳng hạn như JLabel.
+
+Mặc dù nhiều (có lẽ phần lớn) ứng dụng sử dụng Swing sẽ không liên quan đến việc vẽ trực tiếp lên bề mặt của một thành phần,
+nhưng điều này có sẵn cho các ứng dụng cần tính năng này. Để viết đầu ra trực tiếp lên bề mặt của một thành phần,
+bạn sẽ sử dụng một hoặc nhiều phương thức vẽ được định nghĩa bởi AWT, như drawLine() hoặc drawRect().
+Do đó, hầu hết các kỹ thuật và phương thức được mô tả trong Chương 25 cũng áp dụng cho Swing.
+
+Tuy nhiên, cũng có một số khác biệt rất quan trọng, và quá trình này được thảo luận chi tiết trong phần này.
+
+----------------------
+Cơ bản về Vẽ
+Cách tiếp cận vẽ trong Swing được xây dựng trên cơ chế dựa trên AWT ban đầu, nhưng cài đặt của Swing cung cấp
+kiểm soát tinh tế hơn. Trước khi xem xét cụ thể về vẽ dựa trên Swing, hữu ích để xem lại cơ chế dựa trên AWT đứng sau nó.
+
+Lớp AWT Component định nghĩa một phương thức gọi là paint() được sử dụng để vẽ đầu ra trực tiếp lên bề mặt
+của một thành phần. Phần lớn thời gian, paint() không được gọi bởi chương trình của bạn.
+(Thực tế, chỉ trong những trường hợp đặc biệt nhất nó mới được gọi bởi chương trình của bạn.)
+
+Thay vào đó, paint() được gọi bởi hệ thống thời gian chạy mỗi khi một thành phần phải được vẽ. Tình huống này có thể
+xảy ra vì một số lý do. Ví dụ, cửa sổ mà thành phần được hiển thị có thể bị ghi đè bởi một cửa sổ khác và sau đó được
+hiển thị lại. Hoặc, cửa sổ có thể được thu nhỏ và sau đó phục hồi.
+
+Phương thức paint() cũng được gọi khi một chương trình bắt đầu chạy. Khi viết mã dựa trên AWT, một ứng dụng sẽ ghi đè
+phương thức paint() khi nó cần viết đầu ra trực tiếp lên bề mặt của thành phần.
+
+Bởi vì JComponent kế thừa Component, tất cả các thành phần nhẹ của Swing đều kế thừa phương thức paint().
+Tuy nhiên, bạn sẽ không ghi đè nó để vẽ trực tiếp lên bề mặt của một thành phần.
+
+Lý do là Swing sử dụng một phương pháp vẽ phức tạp hơn, liên quan đến ba phương thức riêng biệt: paintComponent(),
+paintBorder() và paintChildren(). Các phương thức này vẽ phần được chỉ định của một thành phần và chia quá trình vẽ
+thành ba hành động khác nhau, có tính logic. Trong một thành phần nhẹ, phương thức paint() gốc của AWT đơn giản là
+gọi các phương thức này theo thứ tự vừa được đề cập.
+
+Để vẽ lên bề mặt của một thành phần Swing, bạn sẽ tạo một lớp con của thành phần và sau đó ghi đè phương
+thức paintComponent() của nó. Đây là phương thức vẽ phần nội bộ của thành phần. Thông thường, bạn sẽ không ghi đè
+hai phương thức vẽ khác. Khi ghi đè paintComponent(), điều đầu tiên bạn phải làm là gọi super.paintComponent(),
+để quá trình vẽ phần của lớp cha diễn ra. (Chỉ khi bạn đang kiểm soát hoàn toàn cách một thành phần được hiển thị
+thì không cần điều này.) Sau đó, bạn viết đầu ra mà bạn muốn hiển thị.
+
+Phương thức paintComponent() được hiển thị dưới đây:
+
+protected void paintComponent(Graphics g)
+
+Tham số g là ngữ cảnh đồ họa mà đầu ra được viết lên.
+
+Để vẽ một thành phần theo sự kiểm soát của chương trình, gọi repaint(). Nó hoạt động trong Swing giống như trong AWT.
+Phương thức repaint() được định nghĩa bởi lớp Component. Gọi nó sẽ khiến hệ thống gọi paint() ngay khi có thể.
+Vì quá trình vẽ là một hoạt động tốn thời gian, cơ chế này cho phép hệ thống thời gian chạy tạm hoãn vẽ một lúc cho
+đến khi một nhiệm vụ ưu tiên cao hơn hoàn thành, ví dụ. Tất nhiên, trong Swing, cuộc gọi paint() dẫn đến cuộc gọi
+paintComponent(). Do đó, để đầu ra lên bề mặt của một thành phần, chương trình của bạn sẽ lưu trữ đầu ra cho
+đến khi paintComponent() được gọi. Trong phần ghi đè paintComponent(), bạn sẽ vẽ đầu ra đã lưu trữ đó.
+
+
+----------------------
+Tính diện tích có thể vẽ
+Khi vẽ lên bề mặt của một thành phần, bạn phải cẩn thận giới hạn đầu ra của mình trong phạm vi nằm bên trong viền.
+Mặc dù Swing tự động cắt bỏ bất kỳ đầu ra nào vượt quá giới hạn của một thành phần, nhưng vẫn có khả năng vẽ vào viền,
+đó viền sẽ bị ghi đè khi vẽ viền. Để tránh điều này, bạn phải tính toán diện tích có thể vẽ của thành phần.
+
+Đây là diện tích được xác định bởi kích thước hiện tại của thành phần trừ không gian được sử dụng bởi viền.
+Do đó, trước khi vẽ lên một thành phần, bạn phải lấy được chiều rộng của viền và điều chỉnh việc vẽ của bạn tương ứng.
+Để lấy chiều rộng viền, gọi getInsets(), được hiển thị dưới đây:
+
+Insets getInsets()
+
+Phương thức này được định nghĩa bởi lớp Container và ghi đè bởi JComponent. Nó trả về một đối tượng Insets
+chứa các kích thước của viền. Các giá trị viền có thể được lấy bằng cách sử dụng các trường sau:
+int top;
+int bottom;
+int left;
+int right;
+Sau đó, các giá trị này được sử dụng để tính toán diện tích vẽ dựa trên chiều rộng và chiều cao của thành phần.
+Bạn có thể lấy chiều rộng và chiều cao của thành phần bằng cách gọi getWidth() và getHeight() trên thành phần.
+Chúng được hiển thị dưới đây:
+int getWidth()
+int getHeight()
+
+Bằng cách trừ giá trị của viền, bạn có thể tính toán chiều rộng và chiều cao có thể sử dụng của thành phần.

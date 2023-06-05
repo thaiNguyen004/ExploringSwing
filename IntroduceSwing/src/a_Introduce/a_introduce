@@ -1,0 +1,75 @@
+Giới thiệu về Swing
+
+Trong Phần II, bạn đã thấy cách xây dựng giao diện người dùng rất đơn giản với các lớp AWT. Mặc dù AWT vẫn là một phần
+quan trọng của Java, nhưng bộ thành phần của nó không còn được sử dụng rộng rãi để tạo giao diện người dùng đồ họa.
+Ngày nay, các nhà lập trình thường sử dụng Swing cho mục đích này. Swing là một framework cung cấp các thành phần GUI
+mạnh mẽ và linh hoạt hơn so với AWT. Kết quả là, Swing đã được sử dụng rộng rãi bởi các nhà lập trình Java trong hơn một thập kỷ.
+
+Phần đề cập đến Swing được chia thành ba chương. Chương này giới thiệu về Swing. Nó bắt đầu bằng cách mô tả các khái niệm
+cốt lõi của Swing. Sau đó, nó trình bày một ví dụ đơn giản để hiển thị hình dạng chung của một chương trình Swing. Sau đó
+là một ví dụ sử dụng xử lý sự kiện. Cuối cùng, chương này giải thích cách thực hiện vẽ trong Swing. Chương tiếp theo trình bày
+một số thành phần Swing thông dụng. Chương thứ ba giới thiệu về menu dựa trên Swing. Quan trọng là hiểu rằng số lượng lớp và
+giao diện trong các gói Swing khá lớn, và không thể bao gồm tất cả trong cuốn sách này. (Trong thực tế, việc bao quát
+toàn bộ Swing đòi hỏi một cuốn sách riêng.) Tuy nhiên, ba chương này sẽ giúp bạn hiểu cơ bản về chủ đề quan trọng này.
+
+LƯU Ý: Để có một sự giới thiệu toàn diện về Swing, hãy xem cuốn sách của tôi "Swing: A Beginner's Guide" do
+McGraw-Hill Professional xuất bản (2007).
+
+Xuất phát điểm của Swing
+Swing không tồn tại trong những ngày đầu của Java. Thay vào đó, nó là một phản ứng đối với những khuyết điểm hiện có
+trong hệ thống GUI gốc của Java: Abstract Window Toolkit (AWT). AWT xác định một bộ điều khiển, cửa sổ và hộp thoại
+hồi đáp cơ bản hỗ trợ một giao diện đồ họa có thể sử dụng, nhưng có hạn chế. Một nguyên nhân cho sự hạn chế của AWT là
+nó chuyển đổi các thành phần trực quan khác nhau thành tương đương của chúng trên từng nền tảng cụ thể, được gọi là peers.
+
+Điều này có nghĩa là giao diện và cảm giác của một thành phần được xác định bởi nền tảng, không phải bởi Java.
+Vì các thành phần AWT sử dụng tài nguyên mã nguồn gốc, chúng được gọi là heavyweight (nặng).
+
+Việc sử dụng các peer nguyên gốc đã gây ra một số vấn đề. Đầu tiên, do sự khác biệt giữa các hệ điều hành, một thành phần
+có thể có hình dạng hoặc thậm chí hành vi khác nhau trên các nền tảng khác nhau. Sự biến đổi tiềm năng này đe dọa
+triết lý chung của Java: viết một lần, chạy ở mọi nơi. Thứ hai, giao diện và cảm giác của mỗi thành phần được cố định
+(vì nó được xác định bởi nền tảng) và không thể thay đổi (dễ dàng). Thứ ba, việc sử dụng các thành phần heavyweight đã
+gây ra một số hạn chế khó chịu. Ví dụ, một thành phần heavyweight luôn có tính chất không trong suốt.
+
+Không lâu sau khi Java được phát hành ban đầu, trở nên rõ ràng rằng các giới hạn và hạn chế hiện có trong AWT đủ nghiêm
+trọng để cần phải có một phương pháp tốt hơn. Giải pháp đó là Swing. Được giới thiệu vào năm 1997, Swing được bao gồm là
+một phần của Java Foundation Classes (JFC). Ban đầu, Swing có sẵn để sử dụng với Java 1.1 như một thư viện riêng.
+Tuy nhiên, bắt đầu từ Java 1.2, Swing (và phần còn lại của JFC) đã được tích hợp hoàn toàn vào Java.
+
+Swing được xây dựng trên nền tảng AWT
+Trước khi tiếp tục, cần phải nhấn mạnh một điểm quan trọng: mặc dù Swing loại bỏ một số giới hạn có sẵn trong AWT,
+nhưng Swing không thay thế AWT. Thay vào đó, Swing được xây dựng trên nền tảng của AWT. Đây là lý do tại sao AWT vẫn
+là một phần quan trọng của Java. Swing cũng sử dụng cơ chế xử lý sự kiện giống như AWT. Do đó, để sử dụng Swing, cần hiểu
+cơ bản về AWT và xử lý sự kiện. (AWT được trình bày trong Chương 25 và 26. Xử lý sự kiện được mô tả trong Chương 24.)
+
+Hai tính năng quan trọng của Swing
+Như đã được giải thích, Swing được tạo ra để giải quyết những hạn chế có trong AWT. Nó làm điều này thông qua hai tính năng
+quan trọng: các thành phần lightweight và giao diện có thể tùy chỉnh (pluggable look and feel). Cùng nhau, chúng cung cấp
+một giải pháp tinh tế và dễ sử dụng cho các vấn đề của AWT. Hơn bất cứ điều gì khác, hai tính năng này là những yếu tố
+quan trọng xác định bản chất của Swing. Mỗi tính năng sẽ được xem xét ở đây.
+
+Các thành phần của Swing là lightweight
+Với rất ít ngoại lệ, các thành phần của Swing là lightweight (nhẹ nhàng). Điều này có nghĩa là chúng được viết hoàn toàn
+bằng Java và không ánh xạ trực tiếp vào peers cụ thể của từng nền tảng. Do đó, các thành phần lightweight hiệu quả hơn
+và linh hoạt hơn. Hơn nữa, vì các thành phần lightweight không được dịch sang peers nguyên gốc, giao diện và cảm giác của
+mỗi thành phần được xác định bởi Swing, không phụ thuộc vào hệ điều hành gốc. Kết quả là, mỗi thành phần sẽ hoạt động một
+cách nhất quán trên tất cả các nền tảng.
+
+Swing hỗ trợ giao diện có thể tùy chỉnh (PLAF) Plaggable Look And Feel
+Swing hỗ trợ giao diện có thể tùy chỉnh (PLAF). Vì mỗi thành phần của Swing được hiển thị bằng mã Java thay vì bởi peers
+nguyên gốc, giao diện của một thành phần nằm trong sự kiểm soát của Swing. Điều này có nghĩa là có thể tách riêng giao diện
+của một thành phần khỏi logic của thành phần, và đây chính là điều mà Swing thực hiện. Việc tách riêng giao diện cung cấp
+một lợi thế đáng kể: có thể thay đổi cách mà một thành phần được hiển thị mà không ảnh hưởng đến các khía cạnh khác của nó.
+Nói cách khác, có thể "gắn vào" một giao diện mới cho bất kỳ thành phần nào mà không tạo ra bất kỳ hiệu ứng phụ trong
+mã sử dụng thành phần đó.
+
+Hơn nữa, có thể định nghĩa các tập hợp giao diện khác nhau đại diện cho các kiểu giao diện người dùng (GUI) khác nhau.
+Để sử dụng một kiểu cụ thể, giao diện của nó chỉ cần được "gắn vào". Sau khi làm điều này, tất cả các thành phần sẽ
+tự động được hiển thị bằng cách sử dụng kiểu đó.
+
+Giao diện có thể tùy chỉnh mang lại một số lợi ích quan trọng. Có thể định nghĩa một giao diện mà nhất quán trên tất cả
+các nền tảng. Ngược lại, có thể tạo ra một giao diện mô phỏng hành vi của một nền tảng cụ thể. Cũng có thể thiết kế một
+giao diện tùy chỉnh. Cuối cùng, giao diện có thể được thay đổi động trong quá trình chạy.
+
+Java cung cấp các giao diện có thể tùy chỉnh, chẳng hạn như metal và Nimbus, có sẵn cho tất cả người dùng Swing.
+Giao diện metal còn được gọi là giao diện Java. Nó độc lập với nền tảng và có sẵn trong tất cả các môi trường thực thi Java.
+Đây cũng là giao diện mặc định. Cuốn sách này sử dụng giao diện mặc định của Java (metal) vì nó độc lập với nền tảng.
